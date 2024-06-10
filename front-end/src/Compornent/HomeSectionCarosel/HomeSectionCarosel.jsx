@@ -4,10 +4,10 @@ import AliceCarousel from 'react-alice-carousel';
 import { Button } from '@headlessui/react';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { mens_kurta } from '../../Data/mens_kuruta';
 
 
-export default function HomeSectionCarousel() {
+
+export default function HomeSectionCarousel({data,sectionName}) {
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef(null);
 
@@ -17,7 +17,7 @@ export default function HomeSectionCarousel() {
     1024: { items: 4.5 },
   };
 
-  const items = mens_kurta.slice(0, 10).map((item, index) => (
+  const items = data.slice(0, 10).map((item, index) => (
     <div key={index} className="p-2">
       <HomeSectionCard product={item} />
     </div>
@@ -41,6 +41,7 @@ export default function HomeSectionCarousel() {
 
   return (
     <div className="px-4">
+      <h2 className='py-5 font-extrabold text-gray-800 text-4x1'>{sectionName}</h2>
       <div className="relative p-8 border border-black">
         <AliceCarousel
           items={items}

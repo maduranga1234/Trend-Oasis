@@ -148,7 +148,7 @@ export default function Product() {
           </Dialog>
         </Transition>
 
-        <main className="px-4 mx-auto sm:px-6 lg:px-20">
+        <main className="px-4 mx-auto sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
 
@@ -216,8 +216,8 @@ export default function Product() {
             </h2>
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
-              {/* Filters */}
-              <form className="hidden lg:block">
+              <div className="hidden lg:block">
+                <h1 className="mb-4 text-lg font-bold opacity-50">Filters</h1>
                 {filters.map((section) => (
                   <Disclosure as="div" key={section.id} className="py-6 border-b border-gray-200">
                     {({ open }) => (
@@ -266,7 +266,7 @@ export default function Product() {
                       <>
                         <h3 className="flow-root -my-3">
                           <Disclosure.Button className="flex items-center justify-between w-full py-3 text-sm text-gray-400 bg-white hover:text-gray-500">
-                            <FormLabel className="font-medium text-gray-900">{section.name}</FormLabel>
+                            <span className="font-medium text-gray-900">{section.name}</span>
                             <span className="flex items-center ml-6">
                               {open ? (
                                 <MinusIcon className="w-5 h-5" aria-hidden="true" />
@@ -294,12 +294,14 @@ export default function Product() {
                     )}
                   </Disclosure>
                 ))}
-              </form>
+              </div>
 
               {/* Product grid */}
-              <div className="w-full lg:col-span-4">
-                <div className='flex flex-wrap justify-center py-5 bg-white'>
-                  {mens_kurta.map((item) => <ProductCard key={item.id} product={item} />)}
+              <div className="lg:col-span-4">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                  {mens_kurta.map((item) => (
+                    <ProductCard key={item.id} product={item} />
+                  ))}
                 </div>
               </div>
             </div>

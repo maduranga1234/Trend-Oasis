@@ -1,28 +1,63 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react';
 import {
   Dialog,
   Disclosure,
   Menu,
   Transition,
-} from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
-import { mens_kurta } from '../../Data/mens_kuruta'
-import ProductCard from './ProductCard'
-import { filters, Singlefilters } from './FilterData'
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
+} from '@headlessui/react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
+import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid';
+import { mens_kurta } from '../../Data/mens_kuruta';
+
+import ProductCard from './ProductCard';
+import { filters, Singlefilters } from './FilterData';
+import { FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const sortOptions = [
   { name: 'Price: Low to High', href: '#', current: false },
   { name: 'Price: High to Low', href: '#', current: false },
-]
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ');
 }
 
 export default function Product() {
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleFilter = (value, sectionId) => {
+    const searchParams = new URLSearchParams(location.search);
+    let filterValue = searchParams.getAll(sectionId);
+
+    if (filterValue.length > 0 && filterValue[0].split(',').includes(value)) {
+      filterValue = filterValue[0].split(',').filter((item) => item !== value);
+
+      if (filterValue.length === 0) {
+        searchParams.delete(sectionId);
+      }
+    } else {
+      filterValue.push(value);
+    }
+
+    if (filterValue.length > 0) {
+      searchParams.set(sectionId, filterValue.join(','));
+    }
+
+    const query = searchParams.toString();
+    navigate({ search: `?${query}` });
+  };
+
+  const handleRadioFilterChange = (e, sectionId) => {
+    const searchParams = new URLSearchParams(location.search);
+
+    searchParams.set(sectionId, e.target.value);
+    const query = searchParams.toString();
+    navigate({ search: `?${query}` });
+  };
 
   return (
     <div className="bg-white">
@@ -52,7 +87,11 @@ export default function Product() {
               >
                 <Dialog.Panel className="relative flex flex-col w-full h-full max-w-xs py-4 pb-12 ml-auto overflow-y-auto bg-white shadow-xl">
                   <div className="flex items-center justify-between px-4">
-                    <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+                    <div className="flex items-center justify-between py-10 ">
+                      <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+                      <FilterListIcon />
+                    </div>
+
                     <button
                       type="button"
                       className="flex items-center justify-center w-10 h-10 p-2 -mr-2 text-gray-400 bg-white rounded-md"
@@ -86,6 +125,7 @@ export default function Product() {
                                 {section.options.map((option, optionIdx) => (
                                   <div key={option.value} className="flex items-center">
                                     <input
+                                      onChange={() => handleFilter(option.value, section.id)}
                                       id={`filter-mobile-${section.id}-${optionIdx}`}
                                       name={`${section.id}[]`}
                                       defaultValue={option.value}
@@ -132,6 +172,7 @@ export default function Product() {
                                       value={option.value}
                                       control={<Radio />}
                                       label={option.label}
+                                      onChange={(e) => handleRadioFilterChange(e, section.id)}
                                     />
                                   ))}
                                 </RadioGroup>
@@ -169,7 +210,7 @@ export default function Product() {
                   enterFrom="transform opacity-0 scale-95"
                   enterTo="transform opacity-100 scale-100"
                   leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
+                  leaveFrom="opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
                   <Menu.Items className="absolute right-0 z-10 w-40 mt-2 origin-top-right bg-white rounded-md shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
@@ -239,6 +280,7 @@ export default function Product() {
                             {section.options.map((option, optionIdx) => (
                               <div key={option.value} className="flex items-center">
                                 <input
+                                  onChange={() => handleFilter(option.value, section.id)}
                                   id={`filter-${section.id}-${optionIdx}`}
                                   name={`${section.id}[]`}
                                   defaultValue={option.value}
@@ -285,6 +327,7 @@ export default function Product() {
                                   value={option.value}
                                   control={<Radio />}
                                   label={option.label}
+                                  onChange={(e) => handleRadioFilterChange(e, section.id)}
                                 />
                               ))}
                             </RadioGroup>
@@ -309,5 +352,5 @@ export default function Product() {
         </main>
       </div>
     </div>
-  )
+  );
 }

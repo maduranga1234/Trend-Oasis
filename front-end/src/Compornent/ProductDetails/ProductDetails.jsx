@@ -3,6 +3,8 @@ import { StarIcon } from '@heroicons/react/20/solid';
 import { Button, Radio, RadioGroup } from '@headlessui/react';
 import { Box, Grid, LinearProgress, Rating } from '@mui/material';
 import ProductReviewCard from './ProductReviewCard';
+import { mens_kurta } from '../../Data/mens_kuruta';
+import HomeSectionCard from '../Customer/HomeSectionCard/HomeSectionCard';
 
 const product = {
   name: 'Basic Tee 6-Pack',
@@ -257,7 +259,7 @@ export default function ProductDetails() {
           </div>
         </section>
 
-        {/*rating and rews */}
+        {/*rating and reviews */}
         <section>
        <h1 className='pb-4 text-lg font-semibold'>Recent Review & Rating</h1>
        <div className='p-5 border'>
@@ -276,7 +278,7 @@ export default function ProductDetails() {
             <p className='opacity-60'>594890 Rating</p>
           
         </div>
-        <Box className="mt-5">
+        <Box className="mt-5 ">
             <Grid container alignItems="center" gap={2}>
                <Grid item xs={2}>
                 <p>Excellent</p>
@@ -292,7 +294,7 @@ export default function ProductDetails() {
                 <p>Very Good</p>
                </Grid>
                <Grid item xs={7}>
-               <LinearProgress sx={{bgcolor:"#d0d0d0",borderRadius:4,height:7}} variant='determinate' value={50} color='success' />
+               <LinearProgress sx={{bgcolor:"#d0d0d0",borderRadius:4,height:7}} variant='determinate' value={50} color='info' />
             
                </Grid>
             </Grid>
@@ -301,16 +303,16 @@ export default function ProductDetails() {
                 <p>Good</p>
                </Grid>
                <Grid item xs={7}>
-               <LinearProgress sx={{bgcolor:"#d0d0d0",borderRadius:4,height:7}} variant='determinate' value={40} color='success' />
+               <LinearProgress sx={{bgcolor:"#d0d0d0",borderRadius:4,height:7}} variant='determinate' value={40} color='secondary' />
             
                </Grid>
             </Grid>
             <Grid container alignItems="center" gap={2}>
                <Grid item xs={2}>
-                <p>Avarage</p>
+                <p>Average</p>
                </Grid>
                <Grid item xs={7}>
-               <LinearProgress sx={{bgcolor:"#d0d0d0",borderRadius:4,height:7}} variant='determinate' value={30} color='success' />
+               <LinearProgress sx={{bgcolor:"#d0d0d0",borderRadius:4,height:7}} variant='determinate' value={30} color='warning' />
             
                </Grid>
             </Grid>
@@ -319,7 +321,7 @@ export default function ProductDetails() {
                 <p>Poor</p>
                </Grid>
                <Grid item xs={7}>
-               <LinearProgress sx={{bgcolor:"#d0d0d0",borderRadius:4,height:7}} variant='determinate' value={20} color='success' />
+               <LinearProgress sx={{bgcolor:"#d0d0d0",borderRadius:4,height:7}} variant='determinate' value={20} color='error' />
             
                </Grid>
             </Grid>
@@ -330,6 +332,17 @@ export default function ProductDetails() {
         </Grid>
 
        </div>
+        </section>
+
+        {/* similar products */}
+
+        <section className='pt-10'>
+          <h1 className='py-5 text-xl font-bold'>Similar Products</h1>
+          <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4'>
+            {mens_kurta.map((item) => (
+              <HomeSectionCard key={item.id} product={item} />
+            ))}
+          </div>
         </section>
       </div>
     </div>

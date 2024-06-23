@@ -1,10 +1,15 @@
-import React from 'react'
-import CartItem from './CartItem'
+import React from "react";
+import AddressCard from "../AddressCard/AddressCard";
+import CartItem from "../Cart/CartItem";
 
-export default function Cart() {
+export default function OrderSummery() {
   return (
     <div>
-      <div className='relative grid-cols-3 lg:grid lg:px-16'>
+      <div className="p-5 border shadow-lg rounded-s-md ">
+        <AddressCard />
+      </div>
+      <div>
+      <div className='relative grid-cols-3 lg:grid '>
           <div className='col-span-2'>
          { [1,1,1,1].map((item)=><CartItem/>)}
           </div>
@@ -52,5 +57,6 @@ export default function Cart() {
       </div>
 
      </div>
-  )
+    </div>
+  );
 }

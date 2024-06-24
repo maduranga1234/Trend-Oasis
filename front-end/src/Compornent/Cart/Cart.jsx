@@ -1,7 +1,14 @@
 import React from 'react'
 import CartItem from './CartItem'
+import { useNavigate } from 'react-router-dom'
 
 export default function Cart() {
+   
+    const navigate = useNavigate();
+    const handleCheckOut=()=>{
+          navigate("/checkout?step=2")
+    }
+
   return (
     <div>
       <div className='relative grid-cols-3 lg:grid lg:px-16'>
@@ -34,7 +41,8 @@ export default function Cart() {
             <span className='text-green-600 '>Rs.2000</span>
 
         </div>
-        <button
+        <button   
+                  onClick={handleCheckOut}
                   type="submit"
                   className="flex items-center justify-center w-full px-8 py-1 mt-4 text-base font-medium text-white bg-[#9155fd] border border-transparent rounded-md hover:bg-[#7b44d9] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
